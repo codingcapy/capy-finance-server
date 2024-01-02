@@ -1,0 +1,33 @@
+
+MAJOR COMPONENTS
+user auth
+financial plan
+income
+spending
+assets
+liabilities
+financial goals
+generated projections
+generated savings
+tracking
+
+MAJOR COMPONENTS BREAKDOWN
+User model schema - userId, username, password, date, status
+Financial Plan model schema - planId, userId, username, date, status[archived,active], title, description
+Income model schema - incomeId, planId, value, currency, taxRate, type, date, startDate, endDate, title, description
+Fixed expenditure model schema - fExpId, planId, value, currency, type, date, startDate, endDate, title, description
+Variable expenditure model schema - vExpId, planId, value, currency, type, date, startDate, endDate, title, description
+Asset model schema - assetId, planId, value, currency, growthRate, date, title, description
+Liability model schema - liabilityId, planId, value, currency, date, title, description
+Financial goal model schema - goalId, planId, value, currency, date, deadline, title, description
+Progress Entry model schema - entryId, planId, value, currency, date, title, description
+
+NEW USER FLOW
+User signs up/logs in
+User creates a financial plan - this generates an empty plan with title and description
+User creates income in the plan - this generates a chart that assumes 100% savings and growth over time and also generates gross and net income and net worth
+User creates fixed expenses in the plan - this adjusts the chart, gross and net income and net worth
+User creates variable expenses in the plan - more adjustments taking these new expenses into account
+User creates assets in the plan - adjusts chart and net worth
+User creates liabilities in the plan - adjusts chart and net worth
+User creates financial goals - marks the chart with key dates and required savings to achieve goals
