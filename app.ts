@@ -5,6 +5,7 @@ import connectDB from "./connect"
 import users from "./routes/users"
 import user from "./routes/user"
 import plans from "./routes/plans"
+import plan from "./routes/plan"
 import incomes from "./routes/incomes"
 import fixed from "./routes/fixed"
 import variable from "./routes/variable"
@@ -28,6 +29,7 @@ app.get("/", (req: Request, res: Response) => {
 app.use("/api/v1/users", users)
 app.use("/api/v1/user", user)
 app.use("/api/v1/plans", plans)
+app.use("/api/v1/plan", plan)
 app.use("/api/v1/incomes", incomes)
 app.use("/api/v1/fixed", fixed)
 app.use("/api/v1/variable", variable)

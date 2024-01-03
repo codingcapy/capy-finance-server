@@ -5,6 +5,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import User from "./models/User";
 import Plan from "./models/Plan";
+import Income from "./models/Income";
 
 export interface IDecodedUser {
     userId: number
@@ -82,4 +83,11 @@ export async function getPlans(req: Request, res: Response) {
     const userId = req.params.userId
     const plans = await Plan.find({ userId: parseInt(userId) })
     res.json(plans)
+}
+
+export async function getPlan(req: Request, res: Response) {
+    const planId = req.params.planId
+    const plan = await Plan.findOne({ planId: parseInt(planId) })
+    const income = await Income.find({ planId: parseInt(planId) })
+    res.json({plan, income})
 }
