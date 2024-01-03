@@ -1,8 +1,10 @@
 
 import express, { Request, Response } from "express"
+import { createPlan, getPlans } from "../controller"
 
 const plans = express.Router()
 
-plans.route("/").get((req:Request,res:Response)=> res.send("plans"))
+plans.route("/").post(createPlan)
+plans.route("/:userId").get(getPlans)
 
 export default plans

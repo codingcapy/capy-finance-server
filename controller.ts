@@ -4,6 +4,7 @@ import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import User from "./models/User";
+import Plan from "./models/Plan";
 
 export interface IDecodedUser {
     userId: number
@@ -63,4 +64,22 @@ export async function createUser(req: Request, res: Response) {
         const user = await User.create({ username: username, password: encrypted, userId: userId })
         res.status(200).json({ success: true, message: "Sign up successful!" })
     }
+}
+
+
+export async function createPlan(req: Request, res: Response) {
+    const plans = await Plan.find({})
+    const planId = plans.length === 0 ? 1 : plans[plans.length - 1].postId + 1;
+    const title = req.body.title
+    const content = req.body.content
+    const username = req.body.username
+    const userId = parseInt(req.body.userId)
+    const plan = await Plan.create({ title, content, username, userId, planId })
+    res.status(200).json({ success: true })
+}
+
+export async function getPlans(req: Request, res: Response) {
+    const userId = req.params.userId
+    const plans = await Plan.find({ userId: parseInt(userId) })
+    res.json(plans)
 }
