@@ -1,8 +1,9 @@
 
 import express, { Request, Response } from "express"
+import { createFixed } from "../controller"
 
 const fixed = express.Router()
 
-fixed.route("/").get((req: Request, res: Response) => res.send("fixed"))
+fixed.route("/").post(createFixed)
 
 export default fixed

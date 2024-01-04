@@ -6,6 +6,7 @@ import bcrypt from "bcrypt";
 import User from "./models/User";
 import Plan from "./models/Plan";
 import Income from "./models/Income";
+import Fixed from "./models/Fixed";
 
 export interface IDecodedUser {
     userId: number
@@ -69,7 +70,7 @@ export async function createUser(req: Request, res: Response) {
 
 export async function createPlan(req: Request, res: Response) {
     const plans = await Plan.find({})
-    const planId = plans.length === 0 ? 1 : plans[plans.length - 1].postId + 1;
+    const planId = plans.length === 0 ? 1 : plans[plans.length - 1].planId + 1;
     const title = req.body.title
     const content = req.body.content
     const username = req.body.username
@@ -88,19 +89,33 @@ export async function getPlan(req: Request, res: Response) {
     const planId = req.params.planId
     const plan = await Plan.findOne({ planId: parseInt(planId) })
     const income = await Income.find({ planId: parseInt(planId) })
-    res.json({ plan, income })
+    const fixed = await Fixed.find({ planId: parseInt(planId) })
+    res.json({ plan, income, fixed })
 }
 
 export async function createIncome(req: Request, res: Response) {
     const incomes = await Income.find({})
-    const incomeId = incomes.length === 0 ? 1 : incomes[incomes.length - 1].postId + 1;
+    const incomeId = incomes.length === 0 ? 1 : incomes[incomes.length - 1].incomeId + 1;
     const title = req.body.title
     const content = req.body.content
-    const value = req.body.value
-    const taxRate = req.body.taxRate
+    const value = parseFloat(req.body.value)
+    const taxRate = parseFloat(req.body.taxRate)
     const startDate = req.body.startDate
     const endDate = req.body.endDate
-    const planId = req.body.planId
+    const planId = parseInt(req.body.planId)
     const plan = await Income.create({ title, content, value, taxRate, startDate, endDate, planId, incomeId })
+    res.status(200).json({ success: true })
+}
+
+export async function createFixed(req: Request, res: Response) {
+    const fixeds = await Fixed.find({})
+    const fExpId = fixeds.length === 0 ? 1 : fixeds[fixeds.length - 1].incomeId + 1;
+    const title = req.body.title
+    const content = req.body.content
+    const value = parseFloat(req.body.value)
+    const startDate = req.body.startDate
+    const endDate = req.body.endDate
+    const planId = parseInt(req.body.planId)
+    const plan = await Fixed.create({ title, content, value, startDate, endDate, planId, fExpId })
     res.status(200).json({ success: true })
 }

@@ -10,7 +10,7 @@ const IncomeSchema = new mongoose.Schema({
     startDate: { type: Date, required: true, default: Date.now },
     endDate: { type: Date },
     planId: { type: Number, required: [true, 'planId is required'] },
-    incomeId: { type: Number, required: [true, 'planId is required'] },
+    incomeId: { type: Number, required: [true, 'incomeId is required'] },
 })
 
 const Income = mongoose.models.Income || mongoose.model('Income', IncomeSchema)
