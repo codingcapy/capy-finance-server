@@ -89,5 +89,5 @@ export async function getPlan(req: Request, res: Response) {
     const planId = req.params.planId
     const plan = await Plan.findOne({ planId: parseInt(planId) })
     const income = await Income.find({ planId: parseInt(planId) })
-    res.json({plan, income})
+    res.json({ plan, income })
 }
