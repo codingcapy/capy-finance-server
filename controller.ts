@@ -67,7 +67,6 @@ export async function createUser(req: Request, res: Response) {
     }
 }
 
-
 export async function createPlan(req: Request, res: Response) {
     const plans = await Plan.find({})
     const planId = plans.length === 0 ? 1 : plans[plans.length - 1].postId + 1;
@@ -90,4 +89,18 @@ export async function getPlan(req: Request, res: Response) {
     const plan = await Plan.findOne({ planId: parseInt(planId) })
     const income = await Income.find({ planId: parseInt(planId) })
     res.json({ plan, income })
+}
+
+export async function createIncome(req: Request, res: Response) {
+    const incomes = await Income.find({})
+    const incomeId = incomes.length === 0 ? 1 : incomes[incomes.length - 1].postId + 1;
+    const title = req.body.title
+    const content = req.body.content
+    const value = req.body.value
+    const taxRate = req.body.taxRate
+    const startDate = req.body.startDate
+    const endDate = req.body.endDate
+    const planId = req.body.planId
+    const plan = await Income.create({ title, content, value, taxRate, startDate, endDate, planId, incomeId })
+    res.status(200).json({ success: true })
 }
