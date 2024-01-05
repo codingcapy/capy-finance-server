@@ -9,6 +9,7 @@ import Income from "./models/Income";
 import Fixed from "./models/Fixed";
 import Variable from "./models/Variable";
 import Asset from "./models/Asset";
+import Liability from "./models/Liability";
 
 export interface IDecodedUser {
     userId: number
@@ -148,5 +149,18 @@ export async function createAsset(req: Request, res: Response) {
     const endDate = req.body.endDate
     const planId = parseInt(req.body.planId)
     const plan = await Asset.create({ title, content, value, growthRate, startDate, endDate, planId, assetId })
+    res.status(200).json({ success: true })
+}
+
+export async function createLiability(req: Request, res: Response) {
+    const liabilities = await Liability.find({})
+    const liabilityId = liabilities.length === 0 ? 1 : liabilities[liabilities.length - 1].liabilityId + 1;
+    const title = req.body.title
+    const content = req.body.content
+    const value = parseFloat(req.body.value)
+    const startDate = req.body.startDate
+    const endDate = req.body.endDate
+    const planId = parseInt(req.body.planId)
+    const plan = await Liability.create({ title, content, value, startDate, endDate, planId, liabilityId })
     res.status(200).json({ success: true })
 }
