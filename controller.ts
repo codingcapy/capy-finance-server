@@ -95,7 +95,8 @@ export async function getPlan(req: Request, res: Response) {
     const fixed = await Fixed.find({ planId: parseInt(planId) })
     const variable = await Variable.find({ planId: parseInt(planId) })
     const assets = await Asset.find({ planId: parseInt(planId) })
-    res.json({ plan, income, fixed, variable, assets })
+    const liabilities = await Liability.find({planId: parseInt(planId) })
+    res.json({ plan, income, fixed, variable, assets, liabilities })
 }
 
 export async function createIncome(req: Request, res: Response) {
