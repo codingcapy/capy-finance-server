@@ -7,6 +7,8 @@ import User from "./models/User";
 import Plan from "./models/Plan";
 import Income from "./models/Income";
 import Fixed from "./models/Fixed";
+import Variable from "./models/Variable";
+import Asset from "./models/Asset";
 
 export interface IDecodedUser {
     userId: number
@@ -90,7 +92,9 @@ export async function getPlan(req: Request, res: Response) {
     const plan = await Plan.findOne({ planId: parseInt(planId) })
     const income = await Income.find({ planId: parseInt(planId) })
     const fixed = await Fixed.find({ planId: parseInt(planId) })
-    res.json({ plan, income, fixed })
+    const variable = await Variable.find({ planId: parseInt(planId) })
+    const assets = await Asset.find({ planId: parseInt(planId) })
+    res.json({ plan, income, fixed, variable, assets })
 }
 
 export async function createIncome(req: Request, res: Response) {
@@ -109,7 +113,7 @@ export async function createIncome(req: Request, res: Response) {
 
 export async function createFixed(req: Request, res: Response) {
     const fixeds = await Fixed.find({})
-    const fExpId = fixeds.length === 0 ? 1 : fixeds[fixeds.length - 1].incomeId + 1;
+    const fExpId = fixeds.length === 0 ? 1 : fixeds[fixeds.length - 1].fExpId + 1;
     const title = req.body.title
     const content = req.body.content
     const value = parseFloat(req.body.value)
@@ -117,5 +121,32 @@ export async function createFixed(req: Request, res: Response) {
     const endDate = req.body.endDate
     const planId = parseInt(req.body.planId)
     const plan = await Fixed.create({ title, content, value, startDate, endDate, planId, fExpId })
+    res.status(200).json({ success: true })
+}
+
+export async function createVariable(req: Request, res: Response) {
+    const variables = await Variable.find({})
+    const vExpId = variables.length === 0 ? 1 : variables[variables.length - 1].vExpId + 1;
+    const title = req.body.title
+    const content = req.body.content
+    const value = parseFloat(req.body.value)
+    const startDate = req.body.startDate
+    const endDate = req.body.endDate
+    const planId = parseInt(req.body.planId)
+    const plan = await Variable.create({ title, content, value, startDate, endDate, planId, vExpId })
+    res.status(200).json({ success: true })
+}
+
+export async function createAsset(req: Request, res: Response) {
+    const assets = await Asset.find({})
+    const assetId = assets.length === 0 ? 1 : assets[assets.length - 1].assetId + 1;
+    const title = req.body.title
+    const content = req.body.content
+    const value = parseFloat(req.body.value)
+    const growthRate = parseFloat(req.body.growthRate)
+    const startDate = req.body.startDate
+    const endDate = req.body.endDate
+    const planId = parseInt(req.body.planId)
+    const plan = await Asset.create({ title, content, value, growthRate, startDate, endDate, planId, assetId })
     res.status(200).json({ success: true })
 }

@@ -1,8 +1,9 @@
 
 import express, { Request, Response } from "express"
+import { createVariable } from "../controller"
 
 const variable = express.Router()
 
-variable.route("/").get((req: Request, res: Response) => res.send("variable"))
+variable.route("/").post(createVariable)
 
 export default variable

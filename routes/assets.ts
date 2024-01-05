@@ -1,8 +1,9 @@
 
 import express, { Request, Response } from "express"
+import { createAsset } from "../controller"
 
 const assets = express.Router()
 
-assets.route("/").get((req: Request, res: Response) => res.send("assets"))
+assets.route("/").post(createAsset)
 
 export default assets
