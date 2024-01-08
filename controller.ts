@@ -10,6 +10,7 @@ import Fixed from "./models/Fixed";
 import Variable from "./models/Variable";
 import Asset from "./models/Asset";
 import Liability from "./models/Liability";
+import Goal from "./models/Goal";
 
 export interface IDecodedUser {
     userId: number
@@ -163,5 +164,17 @@ export async function createLiability(req: Request, res: Response) {
     const endDate = req.body.endDate
     const planId = parseInt(req.body.planId)
     const plan = await Liability.create({ title, content, value, startDate, endDate, planId, liabilityId })
+    res.status(200).json({ success: true })
+}
+
+export async function createGoal(req: Request, res: Response) {
+    const goals = await Goal.find({})
+    const goalId = goals.length === 0 ? 1 : goals[goals.length - 1].goalId + 1;
+    const title = req.body.title
+    const content = req.body.content
+    const value = parseFloat(req.body.value)
+    const startDate = req.body.startDate
+    const planId = parseInt(req.body.planId)
+    const plan = await Liability.create({ title, content, value, startDate, planId, goalId })
     res.status(200).json({ success: true })
 }
