@@ -11,6 +11,7 @@ import Variable from "./models/Variable";
 import Asset from "./models/Asset";
 import Liability from "./models/Liability";
 import Goal from "./models/Goal";
+import goals from "./routes/goals";
 
 export interface IDecodedUser {
     userId: number
@@ -90,14 +91,15 @@ export async function getPlans(req: Request, res: Response) {
 }
 
 export async function getPlan(req: Request, res: Response) {
-    const planId = req.params.planId
-    const plan = await Plan.findOne({ planId: parseInt(planId) })
-    const income = await Income.find({ planId: parseInt(planId) })
-    const fixed = await Fixed.find({ planId: parseInt(planId) })
-    const variable = await Variable.find({ planId: parseInt(planId) })
-    const assets = await Asset.find({ planId: parseInt(planId) })
-    const liabilities = await Liability.find({planId: parseInt(planId) })
-    res.json({ plan, income, fixed, variable, assets, liabilities })
+    const planId = parseInt(req.params.planId)
+    const plan = await Plan.findOne({ planId: planId })
+    const income = await Income.find({ planId: planId })
+    const fixed = await Fixed.find({ planId: planId })
+    const variable = await Variable.find({ planId: planId })
+    const assets = await Asset.find({ planId: planId })
+    const liabilities = await Liability.find({ planId: planId })
+    const goals = await Goal.find({ planId: planId })
+    res.json({ plan, income, fixed, variable, assets, liabilities, goals })
 }
 
 export async function createIncome(req: Request, res: Response) {
