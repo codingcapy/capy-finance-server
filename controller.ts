@@ -99,7 +99,11 @@ export async function createPlan(req: Request, res: Response) {
 
 export async function updatePlan(req: Request, res: Response) {
     const planId = parseInt(req.params.planId)
-    const plan = await Plan.findOneAndUpdate({})
+    const incomingPlan = await req.body;
+    const title = incomingPlan.title;
+    const content = incomingPlan.content;
+    const plan = await Plan.findOneAndUpdate({ planId: planId }, { title: title, content: content }, { new: true })
+    res.status(200).json({ success: true });
 }
 
 export async function getPlans(req: Request, res: Response) {
