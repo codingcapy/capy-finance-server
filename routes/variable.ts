@@ -7,10 +7,11 @@ Description: variable router for capy finance web server
  */
 
 import express from "express"
-import { createVariable } from "../controller"
+import { createVariable, updateVariable } from "../controller"
 
 const variable = express.Router()
 
 variable.route("/").post(createVariable)
+variable.route("/:vExpId").post(updateVariable)
 
 export default variable

@@ -153,7 +153,7 @@ export async function updateIncome(req: Request, res: Response) {
     const taxRate = parseFloat(req.body.taxRate)
     const startDate = req.body.startDate
     const endDate = req.body.endDate
-    const plan = await Income.findOneAndUpdate({ incomeId: incomeId }, { title, content, value, taxRate, startDate, endDate, incomeId }, { new: true })
+    const income = await Income.findOneAndUpdate({ incomeId: incomeId }, { title, content, value, taxRate, startDate, endDate, incomeId }, { new: true })
     res.status(200).json({ success: true })
 }
 
@@ -166,7 +166,18 @@ export async function createFixed(req: Request, res: Response) {
     const startDate = req.body.startDate
     const endDate = req.body.endDate
     const planId = parseInt(req.body.planId)
-    const plan = await Fixed.create({ title, content, value, startDate, endDate, planId, fExpId })
+    const fixed = await Fixed.create({ title, content, value, startDate, endDate, planId, fExpId })
+    res.status(200).json({ success: true })
+}
+
+export async function updateFixed(req: Request, res: Response) {
+    const fExpId = parseInt(req.params.fExpId)
+    const title = req.body.title
+    const content = req.body.content
+    const value = parseFloat(req.body.value)
+    const startDate = req.body.startDate
+    const endDate = req.body.endDate
+    const fixed = await Fixed.findOneAndUpdate({ fExpId: fExpId }, { title, content, value, startDate, endDate, fExpId }, { new: true })
     res.status(200).json({ success: true })
 }
 
@@ -179,7 +190,18 @@ export async function createVariable(req: Request, res: Response) {
     const startDate = req.body.startDate
     const endDate = req.body.endDate
     const planId = parseInt(req.body.planId)
-    const plan = await Variable.create({ title, content, value, startDate, endDate, planId, vExpId })
+    const variable = await Variable.create({ title, content, value, startDate, endDate, planId, vExpId })
+    res.status(200).json({ success: true })
+}
+
+export async function updateVariable(req: Request, res: Response) {
+    const vExpId = parseInt(req.params.vExpId)
+    const title = req.body.title
+    const content = req.body.content
+    const value = parseFloat(req.body.value)
+    const startDate = req.body.startDate
+    const endDate = req.body.endDate
+    const variable = await Variable.findOneAndUpdate({ vExpId: vExpId }, { title, content, value, startDate, endDate, vExpId }, { new: true })
     res.status(200).json({ success: true })
 }
 
