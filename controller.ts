@@ -1,4 +1,10 @@
 
+/*
+Author: Paul Kim
+Date: January 9, 2024
+Version: 1.0
+Description: controller for capy finance web server
+ */
 
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
@@ -102,7 +108,8 @@ export async function updatePlan(req: Request, res: Response) {
     const incomingPlan = await req.body;
     const title = incomingPlan.title;
     const content = incomingPlan.content;
-    const plan = await Plan.findOneAndUpdate({ planId: planId }, { title: title, content: content }, { new: true })
+    const active = incomingPlan.active;
+    const plan = await Plan.findOneAndUpdate({ planId: planId }, { title: title, content: content, active: active }, { new: true })
     res.status(200).json({ success: true });
 }
 
@@ -135,6 +142,18 @@ export async function createIncome(req: Request, res: Response) {
     const endDate = req.body.endDate
     const planId = parseInt(req.body.planId)
     const plan = await Income.create({ title, content, value, taxRate, startDate, endDate, planId, incomeId })
+    res.status(200).json({ success: true })
+}
+
+export async function updateIncome(req: Request, res: Response) {
+    const incomeId = parseInt(req.params.incomeId)
+    const title = req.body.title
+    const content = req.body.content
+    const value = parseFloat(req.body.value)
+    const taxRate = parseFloat(req.body.taxRate)
+    const startDate = req.body.startDate
+    const endDate = req.body.endDate
+    const plan = await Income.findOneAndUpdate({ incomeId: incomeId }, { title, content, value, taxRate, startDate, endDate, incomeId }, { new: true })
     res.status(200).json({ success: true })
 }
 

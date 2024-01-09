@@ -1,4 +1,11 @@
 
+/*
+Author: Paul Kim
+Date: January 9, 2024
+Version: 1.0
+Description: app for capy finance web server
+ */
+
 import express, { Request, Response } from "express"
 import cors from "cors"
 import connectDB from "./connect"

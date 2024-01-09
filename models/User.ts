@@ -1,4 +1,10 @@
 
+/*
+Author: Paul Kim
+Date: January 9, 2024
+Version: 1.0
+Description: user model schema for capy finance web server
+ */
 
 import mongoose from "mongoose";
 
