@@ -5,5 +5,6 @@ import { createUser } from "../controller"
 const users = express.Router()
 
 users.route("/").post(createUser)
+users.route("/:userId").post()
 
 export default users

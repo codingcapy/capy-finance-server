@@ -177,6 +177,6 @@ export async function createGoal(req: Request, res: Response) {
     const value = parseFloat(req.body.value)
     const startDate = req.body.startDate
     const planId = parseInt(req.body.planId)
-    const plan = await Liability.create({ title, content, value, startDate, planId, goalId })
+    const plan = await Goal.create({ title, content, value, startDate, planId, goalId })
     res.status(200).json({ success: true })
 }

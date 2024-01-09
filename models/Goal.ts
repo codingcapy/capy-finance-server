@@ -9,8 +9,6 @@ const GoalSchema = new mongoose.Schema({
     createDate: { type: Date, required: true, default: Date.now },
     startDate: { type: Date, required: true, default: Date.now },
     active: { type: Boolean, required: true, default: true },
-    username: { type: String, required: [true, 'username is required'] },
-    userId: { type: Number, required: [true, 'userId is required'] },
     planId: { type: Number, required: [true, 'planId is required'] },
     goalId: { type: Number, required: [true, 'goalId is required'] },
 })
