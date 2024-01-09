@@ -219,6 +219,18 @@ export async function createAsset(req: Request, res: Response) {
     res.status(200).json({ success: true })
 }
 
+export async function updateAsset(req: Request, res: Response) {
+    const assetId = parseInt(req.params.assetId)
+    const title = req.body.title
+    const content = req.body.content
+    const value = parseFloat(req.body.value)
+    const growthRate = parseFloat(req.body.growthRate)
+    const startDate = req.body.startDate
+    const endDate = req.body.endDate
+    const asset = await Asset.findOneAndUpdate({ assetId: assetId }, { title, content, value, growthRate, startDate, endDate, assetId }, { new: true })
+    res.status(200).json({ success: true })
+}
+
 export async function createLiability(req: Request, res: Response) {
     const liabilities = await Liability.find({})
     const liabilityId = liabilities.length === 0 ? 1 : liabilities[liabilities.length - 1].liabilityId + 1;

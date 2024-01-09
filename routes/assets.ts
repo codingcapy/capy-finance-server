@@ -7,10 +7,11 @@ Description: variable expenditure router for capy finance web server
  */
 
 import express from "express"
-import { createAsset } from "../controller"
+import { createAsset, updateAsset } from "../controller"
 
 const assets = express.Router()
 
 assets.route("/").post(createAsset)
+assets.route("/:assetId").post(updateAsset)
 
 export default assets
