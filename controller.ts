@@ -73,6 +73,19 @@ export async function createUser(req: Request, res: Response) {
     }
 }
 
+export async function updateUser(req: Request, res: Response) {
+    const userId = parseInt(req.params.userId)
+    const incomingUser = await req.body;
+    const incomingPassword = incomingUser.password
+    const encrypted = await bcrypt.hash(incomingPassword, saltRounds)
+    const updatedUser = await User.findOneAndUpdate(
+        { userId: userId },
+        { username: incomingUser.username, password: encrypted, userId: incomingUser.userId },
+        { new: true }
+    );
+    res.status(200).json({ success: true });
+}
+
 export async function createPlan(req: Request, res: Response) {
     const plans = await Plan.find({})
     const planId = plans.length === 0 ? 1 : plans[plans.length - 1].planId + 1;
@@ -82,6 +95,11 @@ export async function createPlan(req: Request, res: Response) {
     const userId = parseInt(req.body.userId)
     const plan = await Plan.create({ title, content, username, userId, planId })
     res.status(200).json({ success: true })
+}
+
+export async function updatePlan(req: Request, res: Response) {
+    const planId = parseInt(req.params.planId)
+    const plan = await Plan.findOneAndUpdate({})
 }
 
 export async function getPlans(req: Request, res: Response) {
