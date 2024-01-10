@@ -7,10 +7,11 @@ Description: liabilities router for capy finance web server
  */
 
 import express from "express"
-import { createLiability } from "../controller"
+import { createLiability, updateLiability } from "../controller"
 
 const liabilities = express.Router()
 
 liabilities.route("/").post(createLiability)
+liabilities.route("/:liabilityId").post(updateLiability)
 
 export default liabilities

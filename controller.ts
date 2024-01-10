@@ -244,6 +244,17 @@ export async function createLiability(req: Request, res: Response) {
     res.status(200).json({ success: true })
 }
 
+export async function updateLiability(req: Request, res: Response) {
+    const liabilityId = parseInt(req.params.liabilityId)
+    const title = req.body.title
+    const content = req.body.content
+    const value = parseFloat(req.body.value)
+    const startDate = req.body.startDate
+    const endDate = req.body.endDate
+    const liability = await Liability.findOneAndUpdate({ liabilityId: liabilityId }, { title, content, value, startDate, endDate, liabilityId }, { new: true })
+    res.status(200).json({ success: true })
+}
+
 export async function createGoal(req: Request, res: Response) {
     const goals = await Goal.find({})
     const goalId = goals.length === 0 ? 1 : goals[goals.length - 1].goalId + 1;
