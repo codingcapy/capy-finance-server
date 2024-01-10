@@ -7,11 +7,11 @@ Description: goals router for capy finance web server
  */
 
 import express from "express"
-import { createGoal } from "../controller"
+import { createGoal, updateGoal } from "../controller"
 
 const goals = express.Router()
 
 goals.route("/").post(createGoal)
-goals.route("/:incomeId").post()
+goals.route("/:goalId").post(updateGoal)
 
 export default goals

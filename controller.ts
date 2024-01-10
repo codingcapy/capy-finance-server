@@ -266,3 +266,13 @@ export async function createGoal(req: Request, res: Response) {
     const plan = await Goal.create({ title, content, value, startDate, planId, goalId })
     res.status(200).json({ success: true })
 }
+
+export async function updateGoal(req: Request, res: Response) {
+    const goalId = parseInt(req.params.goalId)
+    const title = req.body.title
+    const content = req.body.content
+    const value = parseFloat(req.body.value)
+    const startDate = req.body.startDate
+    const goal = await Goal.findOneAndUpdate({ goalId: goalId }, { title, content, value, startDate, goalId }, { new: true })
+    res.status(200).json({ success: true })
+}
