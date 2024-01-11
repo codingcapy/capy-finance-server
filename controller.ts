@@ -18,6 +18,7 @@ import Asset from "./models/Asset";
 import Liability from "./models/Liability";
 import Goal from "./models/Goal";
 import goals from "./routes/goals";
+import Message from "./models/Message";
 
 export interface IDecodedUser {
     userId: number
@@ -274,5 +275,14 @@ export async function updateGoal(req: Request, res: Response) {
     const value = parseFloat(req.body.value)
     const startDate = req.body.startDate
     const goal = await Goal.findOneAndUpdate({ goalId: goalId }, { title, content, value, startDate, goalId }, { new: true })
+    res.status(200).json({ success: true })
+}
+
+export async function createMessage(req: Request, res: Response) {
+    const messages = await Message.find({})
+    const messageId = messages.length === 0 ? 1 : messages[messages.length - 1].messageId + 1;
+    const email = req.body.email
+    const content = req.body.content
+    const message = await Message.create({ email, content, messageId })
     res.status(200).json({ success: true })
 }

@@ -20,6 +20,7 @@ import assets from "./routes/assets"
 import liabilities from "./routes/liabilities"
 import goals from "./routes/goals"
 import progress from "./routes/progress"
+import messages from "./routes/messages"
 import dotenv from "dotenv"
 dotenv.config()
 
@@ -44,6 +45,7 @@ app.use("/api/v1/assets", assets)
 app.use("/api/v1/liabilities", liabilities)
 app.use("/api/v1/goals", goals)
 app.use("/api/v1/progress", progress)
+app.use("/api/v1/messages", messages)
 
 const cron = require('cron')
 const https = require('https')
