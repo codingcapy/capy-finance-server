@@ -45,6 +45,23 @@ app.use("/api/v1/liabilities", liabilities)
 app.use("/api/v1/goals", goals)
 app.use("/api/v1/progress", progress)
 
+// const cron = require('cron')
+// const https = require('https')
+// const backendUrl = "http://localhost:3333"
+// const job = new cron.CronJob("*/14 * * * *", () => {
+//     console.log("restarting server")
+//     https.get(backendUrl, (res: any) => {
+//         if (res.statusCode === 200) {
+//             console.log('Server restarted')
+//         }
+//         else {
+//             console.log('failed to restart')
+//         }
+//     })
+// })
+
+// job.start()
+
 async function start() {
     try {
         await connectDB(process.env.MONGO_URI)
